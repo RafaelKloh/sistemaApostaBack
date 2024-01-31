@@ -9,5 +9,13 @@ export async function cadastrarController(req,res){
 }
 
 export async function buscaUsuarioController(req,res){
-    
+    const idUsuario = req.params.idUsuario
+    const numeroUsuario = req.body.numeroAposta
+    const data = new Date()
+    const dia = data.getDate()
+    const mes = data.getMonth() + 1
+    const ano = data.getFullYear()
+    const dataCompleta = ano + "-" + mes + "-" + dia
+    const formaPagamento = "OLHAAQUIDEPOISPRANAOESQUECER"
+    const calorAposta = rq.body.valorAposta
 }

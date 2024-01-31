@@ -3,7 +3,7 @@ import {buscaUsuarioController, cadastrarController } from "../controller/usuari
 
  const userRouter = Router()
 
-userRouter.get('/:id',buscaUsuarioController)
+userRouter.get('/:idUsuario',buscaUsuarioController)
 userRouter.post('',cadastrarController)
 
 export{userRouter}
