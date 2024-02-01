@@ -8,7 +8,7 @@ export async function cadastrarController(req,res){
     return res.json(cadastro)
 }
 
-export async function buscaUsuarioController(req,res){
+export async function apostarController(req,res){
     const idUsuario = req.params.idUsuario
     const numeroUsuario = req.body.numeroAposta
     const data = new Date()
@@ -16,6 +16,12 @@ export async function buscaUsuarioController(req,res){
     const mes = data.getMonth() + 1
     const ano = data.getFullYear()
     const dataCompleta = ano + "-" + mes + "-" + dia
-    const formaPagamento = "OLHAAQUIDEPOISPRANAOESQUECER"
-    const calorAposta = rq.body.valorAposta
+    const formaPagamento = req.body.idFormaPagamento;
+    console.log(formaPagamento)
+    const calorAposta = req.body.valorAposta
+}
+
+
+export async function buscaUsuarioController(req,res){
+
 }
