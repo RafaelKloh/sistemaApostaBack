@@ -13,3 +13,13 @@ export async function cadastrar(nome,email,senha){
         }) 
     })
 }
+
+export async function apostaModell(idUsuario,numeroUsuario,dataCompleta,idFormaPagamento,valorAposta){  
+    return new Promise ((resolve,rejects)=>{
+        console.log(dataCompleta)
+        conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},${numeroUsuario},'${dataCompleta}',${idFormaPagamento},${valorAposta})`,(error,result)=>{
+            console.log(error)
+           resolve(result)
+        }) 
+    })
+}
