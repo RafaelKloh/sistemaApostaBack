@@ -14,6 +14,7 @@ export async function loginModel(email,senha){
             }
             else{
                 resolve(result)
+                
             }
         }) 
     })
