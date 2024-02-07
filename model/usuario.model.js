@@ -42,3 +42,39 @@ export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, idFor
         })
     })
 }
+
+export async function resultadoModell(dataCompleta, animalSorteado, numeroAleatorio) {
+    console.log(animalSorteado)
+    return new Promise((resolve, reject) => {
+
+        const data1 = new Date(dataCompleta).getTime()
+        const data2 = new Date().getTime()
+
+        if(data1 >= data2){
+            const dataInvalida = { mensagem: "Sorteio ainda nao realizado" };
+            resolve(dataInvalida);
+            return
+        }
+        conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataCompleta}'`, (error, result) => {
+            if (result.length <= 0) {
+                conexao.query(`INSERT INTO sorteio (idSorteio, dataSorteio, numeroMaquina, animalSorteado) VALUES(null,'${dataCompleta}',${numeroAleatorio},'${animalSorteado}')`, (errorInsert, resultInsert) => {
+                    if (errorInsert) {
+                        console.log(errorInsert)
+                        reject(errorInsert);
+                    } else {
+                        conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataCompleta}'`, (erro, resultado) => {
+                            if (erro) {
+                                reject(erro);
+                            } else {
+                                resolve(resultado);
+                            }
+                        });
+                    }
+                });
+            } else {
+                resolve(error);
+            }
+        });
+    });
+}
+
