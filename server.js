@@ -11,7 +11,7 @@ server.use(express.json())
 server.use('/user',userRouter)
 server.use('/login',loginRouter)
 server.use('/pagamento',pagamentoRouter)
- const db = conexao.connect(()=>{
+ const db =  conexao.connect(()=>{
     console.log('database connected')
  })
 server.listen(3000,async ()=>{
