@@ -14,7 +14,7 @@ export async function cadastrar(nome, email, senha) {
                     const usuariojaCadastrado = { mensagem: "Email ja cadastrado" };
                     resolve(usuariojaCadastrado);
                 } else {
-                    conexao.query(`INSERT INTO usuario VALUES(null, '${nome}','${email}','${senha}',1)`, (error, result) => {
+                    conexao.query(`INSERT INTO usuario VALUES(null, '${nome}','${email}','${senha}',1,2)`, (error, result) => {
                         if (error) {
                             reject(error);
                         } else {
@@ -36,20 +36,19 @@ export async function cadastrar(nome, email, senha) {
 
 export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, idFormaPagamento, valorAposta) {
     return new Promise((resolve, rejects) => {
-        conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},${numeroUsuario},'${dataCompleta}',${idFormaPagamento},${valorAposta})`, (error, result) => {
-            conexao.query(`SELECT * FROM aposta WHERE idAposta = ${result.insertId}`,(errorSelect,resultSelect)=>{
+        conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${idFormaPagamento},${valorAposta})`, (error, result) => {
+            conexao.query(`SELECT * FROM aposta WHERE idAposta = ${result.insertId}`, (errorSelect, resultSelect) => {
                 resolve(resultSelect)
             })
-            
+
         })
     })
 }
 
 
 export async function resultadoApostaModell(dataSelect) {
-    console.log(dataSelect)
     return new Promise((resolve, rejects) => {
-            conexao.query(`SELECT 
+        conexao.query(`SELECT 
             a.idAposta,
             a.idUsuario,
             a.numeroUsuario,
@@ -62,36 +61,40 @@ export async function resultadoApostaModell(dataSelect) {
             sorteio s ON a.data = s.dataSorteio
         WHERE 
             s.dataSorteio = '${dataSelect}';
-        `,(errorSelect,resultSelect)=>{
-                console.log(resultSelect)
-                resolve(resultSelect)
-            })
+        `, (errorSelect, resultSelect) => {
+            resolve(resultSelect)
         })
+    })
 }
 
 export async function resultadoModell(dataCompleta, animalSorteado, numeroAleatorio) {
     return new Promise((resolve, reject) => {
+
         //data pega do front
         const dataSelect = new Date(dataCompleta);
-        //dataSelect.setUTCHours(0, 0, 0, 0);
+        dataSelect.setUTCHours(0, 0, 0, 0);
         let data1 = dataSelect;
 
         // Data de agora
         const dataAtual = new Date();
         dataAtual.setUTCHours(0, 0, 0, 0);
-        const data2 = dataAtual;
+        let data2 = dataAtual;
 
+        //ARRUMA AQUI VICTORRRRRRRRRRRRRRRRRRRRR
+        //dsoahfoiusahdf
+        //PFVVVVVVVVVVV
+        
+        if (data1.getHours() >= 21) {
+            data1.setDate(data1.getDate()) + 5
+        }
 
-
-        // if(data1.getHours() >= 21){
-        //     data1.setDate(data1.getDate())
-        // }
-        // if(data1.getDate() == data2.getDate()){
-        //     const dataInvalida = { mensagem: "dia de hoje" };
-        //     resolve(dataInvalida);
-        //     return;
-        // }
-
+        console.log(data1.getDate())
+        console.log(data2.getDate())
+        if (data1.getDate() == data2.getDate()) {
+            const dataInvalida = { mensagem: "dia de hoje" };
+            resolve(dataInvalida);
+            return;
+        }
 
         if (data1 >= data2) {
             const dataInvalida = { mensagem: "Sorteio ainda não realizado" };
@@ -113,11 +116,11 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
 
         conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataFinalFormatada}'`, (error, result) => {
             if (result.length <= 0) {
-                conexao.query(`INSERT INTO sorteio (idSorteio, dataSorteio, numeroMaquina, animalSorteado) VALUES(null,'${dataFinalFormatada}',${numeroAleatorio},'${animalSorteado}')`, (errorInsert, resultInsert) => {
+                conexao.query(`INSERT INTO sorteio (idSorteio, dataSorteio, numeroMaquina, animalSorteado) VALUES(null,'${dataFinalFormatada}','${numeroAleatorio}','${animalSorteado}')`, (errorInsert, resultInsert) => {
                     if (errorInsert) {
                         reject(errorInsert);
-                    } 
-                    });
+                    }
+                });
             }
             else {
                 conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataFinalFormatada}'`, (erro, resultado) => {
@@ -126,9 +129,19 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
                     } else {
                         resolve(resultado);
                     }
-                })};
+                })
+            };
         });
     });
+}
+
+export async function resultadoStatusModell(idUsuario) {
+    return new Promise((resolve, rejects) => {
+        conexao.query(`SELECT idStatus FROM usuario WHERE idUsuario = ${idUsuario}`, (error, result) => {
+            resolve(result)
+        })
+    })
+
 }
 
 

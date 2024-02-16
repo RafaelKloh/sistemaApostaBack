@@ -1,4 +1,4 @@
-import { cadastrar, apostaModell, resultadoModell,resultadoApostaModell } from "../model/usuario.model.js"
+import { cadastrar, apostaModell, resultadoModell,resultadoApostaModell,resultadoStatusModell } from "../model/usuario.model.js"
 
 export async function cadastrarController(req, res) {
     const nome = req.body.nome
@@ -49,4 +49,10 @@ export async function resultadoApostaController(req,res){
     const dataSelect = req.body.dataSorteio
     const resultadoAposta = await resultadoApostaModell(dataSelect)
     return res.json(resultadoAposta)
+}
+
+export async function statusUsuarioController(req,res){
+    const idUsuario = req.body.idUsuario
+    const resultadoStatus = await resultadoStatusModell(idUsuario)
+    return res.json(resultadoStatus)
 }
