@@ -18,11 +18,9 @@ export async function apostarController(req, res) {
         mes = `0${mes}`
     }
 
-
     if (dia < 10) {
         dia = `0${dia}`
     }
-
 
     const ano = data.getFullYear()
     const dataCompleta = dia + "-" + mes + "-" + ano
@@ -31,7 +29,6 @@ export async function apostarController(req, res) {
     const aposta = await apostaModell(idUsuario, numeroUsuario, dataCompleta, idFormaPagamento, valorAposta)
     return res.json(aposta)
 }
-
 
 export async function buscaUsuarioController(req, res) {
     return res.json({judas:"Judas"})

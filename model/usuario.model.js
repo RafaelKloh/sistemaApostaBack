@@ -2,8 +2,6 @@ import { rejects } from "assert"
 import { conexao } from "../conexao.js"
 import { resolve } from "path"
 
-
-
 export async function cadastrar(nome, email, senha) {
     return new Promise((resolve, reject) => {
         conexao.query(`SELECT * FROM usuario WHERE email = '${email}'`, (erroSelect, resultSelect) => {
@@ -33,7 +31,6 @@ export async function cadastrar(nome, email, senha) {
     });
 }
 
-
 export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, idFormaPagamento, valorAposta) {
     return new Promise((resolve, rejects) => {
         conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${idFormaPagamento},${valorAposta})`, (error, result) => {
@@ -44,7 +41,6 @@ export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, idFor
         })
     })
 }
-
 
 export async function resultadoApostaModell(dataSelect) {
     return new Promise((resolve, rejects) => {
@@ -70,38 +66,27 @@ export async function resultadoApostaModell(dataSelect) {
 export async function resultadoModell(dataCompleta, animalSorteado, numeroAleatorio) {
     return new Promise((resolve, reject) => {
 
-        //data pega do front
         const dataSelect = new Date(dataCompleta);
         dataSelect.setUTCHours(0, 0, 0, 0);
         let data1 = dataSelect;
 
-        // Data de agora
         const dataAtual = new Date();
         dataAtual.setUTCHours(0, 0, 0, 0);
         let data2 = dataAtual;
-
-        //ARRUMA AQUI VICTORRRRRRRRRRRRRRRRRRRRR
-        //dsoahfoiusahdf
-        //PFVVVVVVVVVVV
         
         if (data1.getHours() >= 21) {
             data1.setDate(data1.getDate()) + 5
         }
-
-        console.log(data1.getDate())
-        console.log(data2.getDate())
         if (data1.getDate() == data2.getDate()) {
             const dataInvalida = { mensagem: "dia de hoje" };
             resolve(dataInvalida);
             return;
         }
-
         if (data1 >= data2) {
             const dataInvalida = { mensagem: "Sorteio ainda não realizado" };
             resolve(dataInvalida);
             return;
         }
-
         const dataFinal = new Date(data1)
         const ano = dataFinal.getFullYear()
         let mes = dataFinal.getMonth() + 1

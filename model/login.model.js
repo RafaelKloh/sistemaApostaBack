@@ -2,8 +2,6 @@ import { rejects } from "assert"
 import {conexao} from "../conexao.js"
 import { resolve } from "path"
 
-
-
 export async function loginModel(email,senha){
      
     return new Promise ((resolve,rejects)=>{
@@ -13,8 +11,7 @@ export async function loginModel(email,senha){
                 resolve(usuarioNaoEncontrado);
             }
             else{
-                resolve(result)
-                
+                resolve(result) 
             }
         }) 
     })

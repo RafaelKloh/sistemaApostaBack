@@ -10,5 +10,4 @@ userRouter.post('/:id/resultadoApostaUsuario',resultadoApostaController)
 userRouter.post('/resultado',resultadoController)
 userRouter.post('/:idUsuario/status',statusUsuarioController)
 
-
 export{userRouter}
