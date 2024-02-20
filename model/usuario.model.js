@@ -31,13 +31,15 @@ export async function cadastrar(nome, email, senha) {
     });
 }
 
-export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, idFormaPagamento, valorAposta) {
+export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, valorAposta) {
     return new Promise((resolve, rejects) => {
-        conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${idFormaPagamento},${valorAposta})`, (error, result) => {
+        console.log(numeroUsuario)
+        conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${valorAposta})`, (error, result) => {
+            console.log(error)
+            console.log(result)
             conexao.query(`SELECT * FROM aposta WHERE idAposta = ${result.insertId}`, (errorSelect, resultSelect) => {
                 resolve(resultSelect)
             })
-
         })
     })
 }
@@ -75,14 +77,10 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
         let data2 = dataAtual;
         
         if (data1.getHours() >= 21) {
-            data1.setDate(data1.getDate()) + 5
+            data1.setDate(data1.getDate() + 1);
         }
-        if (data1.getDate() == data2.getDate()) {
-            const dataInvalida = { mensagem: "dia de hoje" };
-            resolve(dataInvalida);
-            return;
-        }
-        if (data1 >= data2) {
+        
+        if (data1 >= data2 || data1.getDate() == data2.getDate()) {
             const dataInvalida = { mensagem: "Sorteio ainda não realizado" };
             resolve(dataInvalida);
             return;
@@ -90,7 +88,7 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
         const dataFinal = new Date(data1)
         const ano = dataFinal.getFullYear()
         let mes = dataFinal.getMonth() + 1
-        let dia = dataFinal.getDate() + 1
+        let dia = dataFinal.getDate()
         if (mes < 10) {
             mes = `0${mes}`
         }
@@ -99,7 +97,9 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
         }
         const dataFinalFormatada = dia + "-" + mes + "-" + ano
 
+
         conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataFinalFormatada}'`, (error, result) => {
+            console.log(error)
             if (result.length <= 0) {
                 conexao.query(`INSERT INTO sorteio (idSorteio, dataSorteio, numeroMaquina, animalSorteado) VALUES(null,'${dataFinalFormatada}','${numeroAleatorio}','${animalSorteado}')`, (errorInsert, resultInsert) => {
                     if (errorInsert) {
