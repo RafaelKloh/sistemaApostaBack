@@ -39,6 +39,7 @@ export async function resultadoController(req, res) {
     const numeroAleatorio = req.body.numeroMaquina
     const animalSorteado = req.body.animalSorteado
     const resultado = await resultadoModell(dataCompleta, animalSorteado, numeroAleatorio)
+    console.log(resultado)
     return res.json(resultado)
 }
 

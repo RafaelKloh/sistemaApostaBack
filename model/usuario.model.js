@@ -69,13 +69,20 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
     return new Promise((resolve, reject) => {
 
         const dataSelect = new Date(dataCompleta);
-        dataSelect.setUTCHours(0, 0, 0, 0);
+        dataSelect.setHours(0, 0, 0, 0);
+        dataSelect.setDate(dataSelect.getDate() + 1);
         let data1 = dataSelect;
 
         const dataAtual = new Date();
-        dataAtual.setUTCHours(0, 0, 0, 0);
+        dataAtual.setHours(0, 0, 0, 0);
         let data2 = dataAtual;
         
+        console.log(data1.getHours())
+        console.log(data1.getDate())
+        console.log("----------")
+        console.log(data2.getHours())
+        console.log(data2.getDate())
+
         if (data1.getHours() >= 21) {
             data1.setDate(data1.getDate() + 1);
         }
