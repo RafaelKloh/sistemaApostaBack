@@ -17,10 +17,3 @@ export async function resultadoAposta(data){
     })
 }
 
-export async function listaUsuario(){
-    return new Promise ((resolve,rejects)=>{
-        conexao.query(`SELECT * from usuario`,(error,result)=>{
-            resolve(result)
-        }) 
-    })
-}
