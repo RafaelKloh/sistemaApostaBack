@@ -9,7 +9,7 @@ export async function cadastrarController(req, res) {
 }
 
 export async function apostarController(req, res) {
-    console.log(req.body)
+   
     const idUsuario = req.params.idUsuario
     const numeroUsuario = req.body.numeroUsuario
     const data = new Date()
@@ -26,6 +26,8 @@ export async function apostarController(req, res) {
     const ano = data.getFullYear()
     const dataCompleta = dia + "-" + mes + "-" + ano
     const valorAposta = req.body.valorApostado
+    console.log(numeroUsuario)
+    console.log(valorAposta)
     const aposta = await apostaModell(idUsuario, numeroUsuario, dataCompleta, valorAposta)
     return res.json(aposta)
 }
@@ -39,7 +41,7 @@ export async function resultadoController(req, res) {
     const numeroAleatorio = req.body.numeroMaquina
     const animalSorteado = req.body.animalSorteado
     const resultado = await resultadoModell(dataCompleta, animalSorteado, numeroAleatorio)
-    console.log(resultado)
+
     return res.json(resultado)
 }
 

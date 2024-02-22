@@ -10,8 +10,7 @@ export async function resultadoAposta(data){
         WHERE
         u.idUsuario = a.idUsuario
         AND a.data = '${data}'; `,(error,result)=>{
-            console.log(error)
-            console.log(result)
+
             resolve(result)
         }) 
     })

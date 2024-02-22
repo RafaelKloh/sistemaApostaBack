@@ -33,10 +33,9 @@ export async function cadastrar(nome, email, senha) {
 
 export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, valorAposta) {
     return new Promise((resolve, rejects) => {
-        console.log(numeroUsuario)
+console.log(numeroUsuario)
         conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${valorAposta})`, (error, result) => {
             console.log(error)
-            console.log(result)
             conexao.query(`SELECT * FROM aposta WHERE idAposta = ${result.insertId}`, (errorSelect, resultSelect) => {
                 resolve(resultSelect)
             })
@@ -76,12 +75,7 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
         const dataAtual = new Date();
         dataAtual.setHours(0, 0, 0, 0);
         let data2 = dataAtual;
-        
-        console.log(data1.getHours())
-        console.log(data1.getDate())
-        console.log("----------")
-        console.log(data2.getHours())
-        console.log(data2.getDate())
+    
 
         if (data1.getHours() >= 21) {
             data1.setDate(data1.getDate() + 1);
@@ -106,7 +100,6 @@ export async function resultadoModell(dataCompleta, animalSorteado, numeroAleato
 
 
         conexao.query(`SELECT * FROM sorteio WHERE dataSorteio = '${dataFinalFormatada}'`, (error, result) => {
-            console.log(error)
             if (result.length <= 0) {
                 conexao.query(`INSERT INTO sorteio (idSorteio, dataSorteio, numeroMaquina, animalSorteado) VALUES(null,'${dataFinalFormatada}','${numeroAleatorio}','${animalSorteado}')`, (errorInsert, resultInsert) => {
                     if (errorInsert) {
