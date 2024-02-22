@@ -3,7 +3,6 @@ import express from 'express'
 import cors from "cors"
 import { userRouter } from "./rota/user.rota.js";
 import { loginRouter } from "./rota/login.rota.js";
-import { pagamentoRouter } from "./rota/pagamento.rota.js";
 
 const server = express()
 server.use(cors())
