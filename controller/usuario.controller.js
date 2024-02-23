@@ -26,8 +26,6 @@ export async function apostarController(req, res) {
     const ano = data.getFullYear()
     const dataCompleta = dia + "-" + mes + "-" + ano
     const valorAposta = req.body.valorApostado
-    console.log(numeroUsuario)
-    console.log(valorAposta)
     const aposta = await apostaModell(idUsuario, numeroUsuario, dataCompleta, valorAposta)
     return res.json(aposta)
 }

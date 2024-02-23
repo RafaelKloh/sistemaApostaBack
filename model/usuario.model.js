@@ -34,7 +34,6 @@ export async function cadastrar(nome, email, senha) {
 export async function apostaModell(idUsuario, numeroUsuario, dataCompleta, valorAposta) {
     return new Promise((resolve, rejects) => {
         conexao.query(`INSERT INTO aposta VALUES(null, ${idUsuario},'${numeroUsuario}','${dataCompleta}',${valorAposta})`, (error, result) => {
-            console.log(error)
             conexao.query(`SELECT * FROM aposta WHERE idAposta = ${result.insertId}`, (errorSelect, resultSelect) => {
                 resolve(resultSelect)
             })
